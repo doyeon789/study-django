@@ -42,3 +42,22 @@ def detail(request, num):
         'article_id':num
     }
     return render(request, 'articles/detail.html',context)
+
+def get_company_list(request):
+    people_list = [
+        {'company':'samsung','name':'doyeon'},
+        {'company':'ssafy','name':'dodododo'}
+    ]
+    context = {
+        'people_list' : people_list
+    }
+    return render(request, 'articles/intro_company.html', context)
+
+
+def intro_company(request, company, name):
+    context = {
+        'company' : company,
+        'name' : name
+    }
+
+    return render(request, 'articles/company.html', context)
