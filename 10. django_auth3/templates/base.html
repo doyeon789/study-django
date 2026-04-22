@@ -7,31 +7,25 @@
 </head>
 <body>
   <nav>
-  <!-- alt + 방향키 ↑ or ↓ : 포커싱된 줄 이동-->
-  {% if user.is_authenticated %}
-    <h1>Hello, {{ user.username }}</h1>
+    {% if user.is_authenticated %}
+      <h1>Hello, {{ user.username }}</h1>
+      <form action="{% url "accounts:logout" %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Logout">
+      </form>
 
-    <!-- logout은 POST 요청 이므로 form -->
-    <form action="{% url "accounts:logout" %}" method="POST">
-      {% csrf_token %}
-      <input type="submit" value="Logout">
-    </form>
+      <a href="{% url "articles:create" %}">Create</a>
 
-    <!-- 회원 탈퇴 버튼 -->
-    <form action="{% url "accounts:delete" %}" method="POST">
-      {% csrf_token %}
-      <input type="submit" value="Delete">
-    </form>
+      <form action="{% url "accounts:delete" %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="delete">
+      </form>
 
-    <a href="{% url "accounts:update" %}">User Update</a>
-
-    <a href="{% url "articles:create" %}">Create</a>
-
-  {% else %}
-
-    <!-- 회원 가입 페이지로 이동 하는 링크 -->
-    <a href="{% url "accounts:signup" %}">SignUp</a>
-  {% endif %}
+      <a href="{% url "accounts:update" %}">Update</a>
+    {% else %}
+      <a href="{% url "accounts:login" %}">Login</a> | 
+      <a href="{% url "accounts:signup" %}">SignUp</a>
+    {% endif %}
   </nav>
 
   {% block content %}
