@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <nav>
+  <!-- alt + 방향키 ↑ or ↓ : 포커싱된 줄 이동-->
+  {% if user.is_authenticated %}
+    <h1>Hello, {{ user.username }}</h1>
+
+    <!-- logout은 POST 요청 이므로 form -->
+    <form action="{% url "accounts:logout" %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="Logout">
+    </form>
+
+    <!-- 회원 탈퇴 버튼 -->
+    <form action="{% url "accounts:delete" %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="Delete">
+    </form>
+
+    <a href="{% url "accounts:update" %}">User Update</a>
+
+    <a href="{% url "articles:create" %}">Create</a>
+
+  {% else %}
+
+    <!-- 회원 가입 페이지로 이동 하는 링크 -->
+    <a href="{% url "accounts:signup" %}">SignUp</a>
+  {% endif %}
+  </nav>
+
+  {% block content %}
+ 
+  {% endblock content %}
+</body>
+</html>
